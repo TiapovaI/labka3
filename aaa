@@ -93,6 +93,7 @@ int main()
         }
         while (!s.isEmpty()) {
             s.pop();
+            s.pop();
         }
     }
     return 0;
