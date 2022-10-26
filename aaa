@@ -1,1 +1,99 @@
+#include <bits/stdc++.h>
+#include <string>
+using namespace std;
 
+class Node {
+public:
+    char data;
+    Node* link;
+
+    explicit Node(char n)
+    {
+        this->data = n;
+        this->link = NULL;
+    }
+};
+
+class Stack {
+    Node* top;
+
+public:
+    Stack() { top = NULL ;}
+    void push(char data)
+    {
+        Node* temp = new Node(data);
+
+        temp->data = data;
+        temp->link = top;
+
+        top = temp;
+    }
+
+    bool isEmpty()
+    {
+        return top == NULL;
+    }
+
+    char peek()
+    {
+        if (!isEmpty())
+            return top->data;
+        else
+            exit(1);
+    }
+
+    void pop()
+    {
+        Node* temp;
+
+        temp = top;
+
+        top = top->link;
+
+        free(temp);
+
+    }
+};
+
+int main()
+{
+    Stack s;
+    string aa;
+    while (cin >> aa) {
+        int k = 1;
+        int l = aa.size();
+        for (int i = 0; i < l; i++) {
+            if (aa[i] == '(') {
+                s.push(aa[i]);
+            }else if (aa[i] == '[') {
+                s.push(aa[i]);
+            }else if (aa[i] == ')'){
+                if (s.isEmpty() == 0 && s.peek() == '('){
+                    s.pop();
+                }else{
+                    cout << "NO\n";
+                    k = 0;
+                    break;
+                }
+            }else if (aa[i] == ']'){
+                if (s.isEmpty() == 0 && s.peek() == '['){
+                    s.pop();
+                }else{
+                    cout << "NO\n";
+                    k = 0;
+                    break;
+                }
+            }
+        }
+        if (k == 1 && s.isEmpty() == 1) {
+            cout << "YES\n";
+        }
+        if (k == 1 && s.isEmpty() == 0){
+            cout << "NO\n";
+        }
+        while (!s.isEmpty()) {
+            s.pop();
+        }
+    }
+    return 0;
+}
